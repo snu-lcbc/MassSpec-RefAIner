@@ -31,4 +31,5 @@ The `--spectrum_file` file should contain a list of peaks with mass and intensit
 
 To see the full list of options, run:
 ```bash
-python predict.py --help```
+python predict.py --help
+```
