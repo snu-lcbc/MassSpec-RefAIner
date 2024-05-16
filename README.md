@@ -1,7 +1,7 @@
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC_BY--NC_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 
 ## Refining EI-MS library search results through atomic-level insights
-> Ucak U.V., Ashyrmamatov I., Lee J. Preprint ChemRxiv: [10.26434/chemrxiv-2024-vrqzf](https://doi.org/10.26434/chemrxiv-2024-vrqzf)
+> Ucak U.V., Ashyrmamatov I., Lee J. Preprint ChemRxiv: [10.26434/chemrxiv-2024-vrqzf-v2](https://doi.org/10.26434/chemrxiv-2024-vrqzf-v2)
 
 Mass spectral reference libraries are fundamental tools for compound identification in electron-ionization mass spectrometry (EI-MS). 
 However, the inherent complexity of mass spectra and the lack of direct correlation between spectral and structural similarities present significant challenges in structure elucidation and accurate peak annotation. 
