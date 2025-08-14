@@ -1,7 +1,7 @@
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC_BY--NC_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 
 ## Refining EI-MS library search results through atomic-level insights
-> Ucak U.V., Ashyrmamatov I., Lee J. Preprint ChemRxiv: [10.26434/chemrxiv-2024-vrqzf-v2](https://doi.org/10.26434/chemrxiv-2024-vrqzf-v2)
+> Ucak U.V., Ashyrmamatov I., Lee J.
 
 <hr style="background: transparent; border: 0.2px dashed;"/>
 
