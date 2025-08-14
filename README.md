@@ -20,7 +20,7 @@ Schematic of the transformer model for converting EI-MS spectral data into struc
 
 <hr style="background: transparent; border: 0.2px dashed;"/>
 
-## Code Usage:
+## Code Usage: (will be improved)
 After installing required packages, you can run the code as follows:
 ```bash
 python predict.py --spectrum_file spectrum_sample.txt --preprocess --output results.json
@@ -33,3 +33,4 @@ To see the full list of options, run:
 ```bash
 python predict.py --help
 ```
+
