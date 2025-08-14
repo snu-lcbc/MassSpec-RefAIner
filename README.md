@@ -105,8 +105,3 @@ The tool displays a formatted table with:
 - ? Low confidence for: `[N]`, `[CH3]`, `[c]`, `[cH]` (may be artifacts)
 
 <hr style="background: transparent; border: 0.2px dashed;"/>
-
-<!-- ![Model Overview](./assets/MSpaper_figure4.png) -->
-<img src="assets/biofigure.png" alt="Casestudy" width="600" />
-
-<hr style="background: transparent; border: 0.2px dashed;"/>
