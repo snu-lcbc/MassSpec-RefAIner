@@ -20,17 +20,93 @@ Schematic of the transformer model for converting EI-MS spectral data into struc
 
 <hr style="background: transparent; border: 0.2px dashed;"/>
 
-## Code Usage: (will be improved)
-After installing required packages, you can run the code as follows:
-```bash
-python predict.py --spectrum_file spectrum_sample.txt --preprocess --output results.json
-```
-<!-- '--spectrum_file', type=Path, required=True, help="The file path where the input spectra can be found. It expects a list of peaks 'mass\tintensity' delimited by lines.") -->
-The `--spectrum_file` file should contain a list of peaks with mass and intensity values separated by a tab. The `--preprocess` flag is used to preprocess the raw spectrum data. If it's already preprocessed, `--preprocess` no needed. The results will be saved in the `--output` file. 
+## 📋 Requirements
 
+- Python 3.8+
+- PyTorch
+- SentencePiece
+- NumPy
+- Rich (for formatted output)
 
-To see the full list of options, run:
+**Install dependencies:**
 ```bash
-python predict.py --help
+pip install -r requirements.txt
 ```
+
+## 🚀 Quick Start
+
+### Basic Usage
+```bash
+python predict.py --spectrum_file your_spectrum.txt --output results.json
+```
+
+### Input Format
+The input file should contain mass/intensity pairs, one per line:
+
+```txt
+# Example: spectrum.txt
+41    120
+43    85
+57    450
+71    320
+85    180
+```
+
+- **First column:** m/z value (mass-to-charge ratio)  
+- **Second column:** Intensity (absolute or relative)  
+- **Separator:** Tab or space
+
+### Preprocessing Options
+If your spectrum needs preprocessing (noise removal, normalization):
+
+```bash
+python predict.py --spectrum_file raw_spectrum.txt --preprocess --output results.json
+```
+
+The `--preprocess` flag will:
+- Remove peaks below **0.4%** relative intensity  
+- Normalize intensities  
+- Convert to **logarithmic ranks (1–7 scale)**
+
+---
+
+## 📊 Understanding the Output
+
+### Console Output (Human-Readable)
+The tool displays a formatted table with:
+- **Atom-Type:** The predicted atomic environment  
+- **Confidence:** Visual confidence bar (normalized `count / max_count`)  
+- **Score:** Percentage confidence score  
+- **Count:** Number of peaks supporting this prediction  
+- **Description:** Human-readable explanation  
+
+**Example output:**
+```
+═══════════════════════════════════════════════════════════════
+                    MASSSPEC-REFAINER RESULTS                    
+═══════════════════════════════════════════════════════════════
+
+📊 Spectrum Analysis Summary:
+   Input peaks: 89
+   Processed peaks: 89
+
+🔬 Predicted Molecular Atom-Types (rAEs):
+   Total unique atom-types: 8
+
+   Atom-Type    Confidence   Score   Count   Description
+   ─────────────────────────────────────────────────────────────
+   [O]          ███████░░░   72.5%    57     Oxygen (ether/carbonyl)
+   [C]          ██████░░░░   65.0%    51     Quaternary carbon (>C<)
+   [CH2]        █████░░░░░   55.0%    44     Methylene group (-CH2-)
+   [Cl]         █████░░░░░   50.0%    40     Chlorine
+   [F]          ████░░░░░░   35.0%    28     Fluorine
+   [NH]         ██░░░░░░░░   20.0%    16     Secondary amine (>NH)
+   [c]          ██░░░░░░░░   12.5%    10     Aromatic carbon
+   [cH]         ██░░░░░░░░   12.5%    10     Aromatic CH
+```
+
+### 💡 Library Search Refinement Suggestions
+- ✓ Consider **INCLUDING** compounds with: `[O]`, `[C]`, `[CH2]`, `[Cl]`  
+- ⚠ **Verify presence** of: `[F]`, `[NH]` (moderate confidence)  
+- ? **Low confidence** for: `[c]`, `[cH]` (may be artifacts)
 
