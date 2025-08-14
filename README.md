@@ -3,16 +3,6 @@
 ## Refining EI-MS library search results through atomic-level insights
 > Ucak U.V., Ashyrmamatov I., Lee J. Preprint ChemRxiv: [10.26434/chemrxiv-2024-vrqzf-v2](https://doi.org/10.26434/chemrxiv-2024-vrqzf-v2)
 
-The inherent complexity of mass spectra and the lack of direct correlation between spectral and structural similarities retards structure elucidation and accurate peak annotation. Our methodology employs modified atomic environments from topological radii zero to represent collections of annotated spectral peaks. Rather than aiming for de novo structure prediction from spectra, our objective is to refine and re-rank candidate structures retrieved by existing library search methods using predicted atom environments. We conducted a multi-step complexity reduction to mass-to-fragment mappings and trained the Transformer model to predict the atomic environments of compounds directly from mass and intensity data, achieving a peak precision of 86.1\% and a recall rate of 78.4\% on the test set. This novel framework not only aids in interpreting EI-MS data by providing insights into structural contents but also refines cosine similarity rankings by suggesting the inclusion or exclusion of certain atomic environments. Our findings over the NIST database suggest that our approach complements conventional methods by improving spectra matching through an in-depth atomic-level analysis.
-
-<!-- ![Preprocessing Workflow](./assets/MSpaper_figure2.png) -->
-<img src="assets/Fig5MSNew.png" alt="Interpretation" width="600" />
-
-
-<!-- ![Model Overview](./assets/MSpaper_figure4.png) -->
-<img src="assets/biofigure" alt="Casestudy" width="600" />
-
-
 <hr style="background: transparent; border: 0.2px dashed;"/>
 
 ## 📋 Requirements
@@ -75,6 +65,11 @@ The tool displays a formatted table with:
 - **Count:** Number of peaks supporting this prediction  
 - **Description:** Human-readable explanation  
 
+<!-- ![Preprocessing Workflow](./assets/MSpaper_figure2.png) -->
+<img src="assets/Fig5MSNew.png" alt="Interpretation" width="600" />
+
+<hr style="background: transparent; border: 0.2px dashed;"/>
+
 **Example output:**
 ```
 ═════════════════════════════════════════════════════════════════
@@ -109,3 +104,9 @@ The tool displays a formatted table with:
 - ⚠ Verify presence of: `[O]`, `[F]`, `[CH2]` (moderate confidence)
 - ? Low confidence for: `[N]`, `[CH3]`, `[c]`, `[cH]` (may be artifacts)
 
+<hr style="background: transparent; border: 0.2px dashed;"/>
+
+<!-- ![Model Overview](./assets/MSpaper_figure4.png) -->
+<img src="assets/biofigure.png" alt="Casestudy" width="600" />
+
+<hr style="background: transparent; border: 0.2px dashed;"/>
