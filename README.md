@@ -3,20 +3,15 @@
 ## Refining EI-MS library search results through atomic-level insights
 > Ucak U.V., Ashyrmamatov I., Lee J. Preprint ChemRxiv: [10.26434/chemrxiv-2024-vrqzf-v2](https://doi.org/10.26434/chemrxiv-2024-vrqzf-v2)
 
-Mass spectral reference libraries are fundamental tools for compound identification in electron-ionization mass spectrometry (EI-MS). 
-However, the inherent complexity of mass spectra and the lack of direct correlation between spectral and structural similarities present significant challenges in structure elucidation and accurate peak annotation. 
-To address these challenges, we have introduced an approach combining CFM-EI, a fragmentation likelihood modeling tool in EI-MS data, with a multi-step complexity reduction strategy for mass-to-fragment mapping. 
-Our methodology involves employing modified atomic environments to represent fragments of super small organic molecules and training a transformer model to predict the structural content of compounds based on mass and intensity data. 
-This holistic solution not only aids in interpreting EI-MS data by providing insights into atom types but also refines cosine similarity rankings by suggesting inclusion or exclusion of specific atom types.
-Tests conducted on EI-MS data from the NIST database demonstrated that our approach complements conventional methods by improving spectra matching through an in-depth atomic-level analysis.
+The inherent complexity of mass spectra and the lack of direct correlation between spectral and structural similarities retards structure elucidation and accurate peak annotation. Our methodology employs modified atomic environments from topological radii zero to represent collections of annotated spectral peaks. Rather than aiming for de novo structure prediction from spectra, our objective is to refine and re-rank candidate structures retrieved by existing library search methods using predicted atom environments. We conducted a multi-step complexity reduction to mass-to-fragment mappings and trained the Transformer model to predict the atomic environments of compounds directly from mass and intensity data, achieving a peak precision of 86.1\% and a recall rate of 78.4\% on the test set. This novel framework not only aids in interpreting EI-MS data by providing insights into structural contents but also refines cosine similarity rankings by suggesting the inclusion or exclusion of certain atomic environments. Our findings over the NIST database suggest that our approach complements conventional methods by improving spectra matching through an in-depth atomic-level analysis.
 
 <!-- ![Preprocessing Workflow](./assets/MSpaper_figure2.png) -->
 <img src="assets/MSpaper_figure2.png" alt="Preprocessing Workflow" width="600" />
-Fragmentation and multi-step complexity reduction plan for EI-MS data interpretation (a) Schematic representation of the data processing workflow, beginning with EI-MS data selection from the NIST Main Library, focusing on compounds with Mw $\leq$ 400 Da, followed by fragment annotation using CFM-EI, and subsequent ion collection. The bottom panel illustrates the initial reduction applied to the pool of fragment ions via similarity thresholding using the Tanimoto coefficient at ECFP2 level. (b) Frequency-based data filtering with respect to atom types (depicted as SMARTS), followed by the process of customizing atomic environment representations to suit analytical needs. The spider chart and adjacent table detail the modifications to AE mappings and the criteria for isotopic abundance-based intensity cutoffs, essential for elements such as S, Cl, and Br.
+
 
 <!-- ![Model Overview](./assets/MSpaper_figure4.png) -->
 <img src="assets/MSpaper_figure4.png" alt="Model Overview" width="600" />
-Schematic of the transformer model for converting EI-MS spectral data into structural information. Peak intensities are encoded as logRanks and combined with m/z values as inputs to the transformer encoder. The decoder then predicts structural content of fragment ions and molecular content as reduced atomic environments (rAEs). The histogram displays the model's accuracy, recall, and precision metrics.
+
 
 <hr style="background: transparent; border: 0.2px dashed;"/>
 
@@ -82,31 +77,35 @@ The tool displays a formatted table with:
 
 **Example output:**
 ```
-═══════════════════════════════════════════════════════════════
-                    MASSSPEC-REFAINER RESULTS                    
-═══════════════════════════════════════════════════════════════
+═════════════════════════════════════════════════════════════════
+                    MassSpec-RefAIner Results
+═════════════════════════════════════════════════════════════════
 
-📊 Spectrum Analysis Summary:
-   Input peaks: 89
-   Processed peaks: 89
+╭───────────────────────────────╮
+│ 📊 Spectrum Analysis Summary: │
+│    Input peaks: 22            │
+│    Processed peaks: 22        │
+│                               │
+╰───────────────────────────────╯
 
 🔬 Predicted Molecular Atom-Types (rAEs):
    Total unique atom-types: 8
 
-   Atom-Type    Confidence   Score   Count   Description
-   ─────────────────────────────────────────────────────────────
-   [O]          ███████░░░   72.5%    57     Oxygen (ether/carbonyl)
-   [C]          ██████░░░░   65.0%    51     Quaternary carbon (>C<)
-   [CH2]        █████░░░░░   55.0%    44     Methylene group (-CH2-)
-   [Cl]         █████░░░░░   50.0%    40     Chlorine
-   [F]          ████░░░░░░   35.0%    28     Fluorine
-   [NH]         ██░░░░░░░░   20.0%    16     Secondary amine (>NH)
-   [c]          ██░░░░░░░░   12.5%    10     Aromatic carbon
-   [cH]         ██░░░░░░░░   12.5%    10     Aromatic CH
+┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Atom-Type    ┃ Confidence      ┃    Score ┃    Count ┃ Description                         ┃
+┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ [C]          │ ██████████      │   100.0% │       27 │ Quaternary carbon (>C<)             │
+│ [O]          │ █████░░░░░      │    51.9% │       14 │ Oxygen (ether/carbonyl)             │
+│ [F]          │ █████░░░░░      │    51.9% │       14 │ Fluorine                            │
+│ [CH2]        │ █░░░░░░░░░      │    18.5% │        5 │ Methylene group (-CH2-)             │
+│ [N]          │ ░░░░░░░░░░      │     7.4% │        2 │ Tertiary amine (>N-)                │
+│ [CH3]        │ ░░░░░░░░░░      │     3.7% │        1 │ Methyl group (-CH3)                 │
+│ [c]          │ ░░░░░░░░░░      │     3.7% │        1 │ Aromatic carbon                     │
+│ [cH]         │ ░░░░░░░░░░      │     3.7% │        1 │ Aromatic CH                         │
+└──────────────┴─────────────────┴──────────┴──────────┴─────────────────────────────────────┘
 ```
 
 ### 💡 Library Search Refinement Suggestions
-- ✓ Consider **INCLUDING** compounds with: `[O]`, `[C]`, `[CH2]`, `[Cl]`  
-- ⚠ **Verify presence** of: `[F]`, `[NH]` (moderate confidence)  
-- ? **Low confidence** for: `[c]`, `[cH]` (may be artifacts)
+- ⚠ Verify presence of: `[O]`, `[F]`, `[CH2]` (moderate confidence)
+- ? Low confidence for: `[N]`, `[CH3]`, `[c]`, `[cH]` (may be artifacts)
 
